@@ -12,7 +12,7 @@ rm -rf kernel/xiaomi/sm8635
 git clone -b lineage-23.0 https://github.com/lightbulb-box/kernel_xiaomi_sm8635.git kernel/xiaomi/sm8635
 
 rm -rf kernel/xiaomi/sm8635-modules
-git clone -b lineage-23.0 https://github.com/lightbulb-box/kernel_xiaomi_sm8635-modules-modules.git kernel/xiaomi/sm8635-modules
+git clone -b lineage-23.0 https://github.com/lightbulb-box/kernel_xiaomi_sm8635-modules.git kernel/xiaomi/sm8635-modules
 
 rm -rf kernel/xiaomi/sm8635-devicetrees
 git clone -b lineage-23.0 https://github.com/lightbulb-box/kernel_xiaomi_sm8635-devicetrees.git kernel/xiaomi/sm8635-devicetrees
