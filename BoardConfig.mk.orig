@@ -82,10 +82,6 @@ DEVICE_MATRIX_FILE := $(DEVICE_PATH)/configs/hidl/compatibility_matrix.xml
 DEVICE_MANIFEST_FILE := $(DEVICE_PATH)/configs/hidl/manifest_vendor.xml
 ODM_MANIFEST_FILES := $(DEVICE_PATH)/configs/hidl/manifest_odm.xml
 
-# Inherit from proprietary files for miuicamera
--include device/xiaomi/peridot-miuicamera/BoardConfig.mk
-CAMERA_PACKAGE_NAME := com.android.camera
-
 # Kernel
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
 TARGET_NEEDS_DTBOIMAGE := true
@@ -168,9 +164,6 @@ TARGET_KERNEL_EXT_MODULES := \
     qcom/opensource/touch-drivers \
     nxp/opensource/driver
 
-# MiuiCamera
-CAMERA_PACKAGE_NAME := com.android.camera
-
 # Partitions
 -include vendor/lineage/config/BoardConfigReservedSize.mk
 
@@ -213,6 +206,10 @@ TARGET_ODM_PROP += $(DEVICE_PATH)/props/odm.prop
 TARGET_PRODUCT_PROP += $(DEVICE_PATH)/props/product.prop
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/props/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/props/vendor.prop
+
+# MiuiCamera
+CAMERA_PACKAGE_NAME := com.android.camera
+-include device/xiaomi/peridot-miuicamera/BoardConfig.mk
 
 # Recovery
 $(call soong_config_set, ufsbsg, ufsframework, bsg)
@@ -265,13 +262,12 @@ BOARD_HOSTAPD_DRIVER := NL80211
 BOARD_HOSTAPD_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
 BOARD_WPA_SUPPLICANT_DRIVER := NL80211
 BOARD_WPA_SUPPLICANT_PRIVATE_LIB := lib_driver_cmd_$(BOARD_WLAN_DEVICE)
-# (1 STA + 1 AP) or (1 STA + 1 of (P2P or NAN)) or (2 AP) or (2 STA)
-WIFI_HAL_INTERFACE_COMBINATIONS := {{{STA}, 1}, {{AP}, 1}}, {{{STA}, 1}, {{P2P, NAN}, 1}}, {{{AP}, 2}}, {{{STA}, 2}}
+CONFIG_IEEE80211AX := true
 WIFI_DRIVER_DEFAULT := qca_cld3
 WIFI_DRIVER_STATE_CTRL_PARAM := "/dev/wlan"
 WIFI_DRIVER_STATE_OFF := "OFF"
 WIFI_DRIVER_STATE_ON := "ON"
-WIFI_FEATURE_HOSTAPD_11AX := true
+WIFI_HIDL_FEATURE_DUAL_INTERFACE := true
 WIFI_HIDL_UNIFIED_SUPPLICANT_SERVICE_RC_ENTRY := true
 WPA_SUPPLICANT_VERSION := VER_0_8_X
 

@@ -23,6 +23,9 @@ $(call inherit-product, packages/modules/Virtualization/apex/product_packages.mk
 $(call soong_config_set,rfs,mpss_firmware_symlink_target,modem_firmware)
 $(call inherit-product, hardware/qcom-caf/common/common.mk)
 
+# MiuiCamera
+$(call inherit-product-if-exists, device/xiaomi/peridot-miuicamera/device.mk)
+
 # A/B
 AB_OTA_POSTINSTALL_CONFIG += \
     RUN_POSTINSTALL_system=true \
@@ -124,7 +127,7 @@ PRODUCT_PACKAGES += \
     init.qti.display_boot.rc \
     init.qti.display_boot.sh
 
-$(foreach display_id, 4630947195234848131 4630947033261136259 4630946545580055171, \
+$(foreach display_id, 4630946416293825923 4630946545580055171 4630947082089526659, \
     $(eval PRODUCT_COPY_FILES += \
         $(LOCAL_PATH)/configs/display/displayconfig.xml:$(TARGET_COPY_OUT_VENDOR)/etc/displayconfig/display_id_$(display_id).xml \
     ))
@@ -152,8 +155,7 @@ PRODUCT_COPY_FILES += \
 
 # Graphics
 PRODUCT_PACKAGES += \
-    android.hardware.graphics.composer3-V2-ndk.vendor \
-    android.hardware.graphics.common-V4-ndk
+    android.hardware.graphics.composer3-V2-ndk.vendor
 
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.vulkan.compute-0.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.vulkan.compute-0.xml \
@@ -308,11 +310,10 @@ PRODUCT_COPY_FILES += \
 # Overlays
 PRODUCT_PACKAGES += \
     ApertureOverlayPeridot \
+    BluetoothOverlayPeridot \
     CarrierConfigOverlayPeridot \
     FrameworkOverlayPeridot \
-    LineageDialerOverlayPeridot \
     LineageSDKOverlayPeridot \
-    LineageSettingsOverlayPeridot \
     NfcOverlayPeridot \
     SecureElementOverlayPeridot \
     SettingsOverlayPeridot \
@@ -361,6 +362,10 @@ PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/props/odm_GL.prop:$(TARGET_COPY_OUT_ODM)/etc/odm_GL.prop \
     $(LOCAL_PATH)/props/odm_IN.prop:$(TARGET_COPY_OUT_ODM)/etc/odm_IN.prop
 
+# Radio
+PRODUCT_PACKAGES += \
+    rfs_msm_mpss_readonly_mbnconfig_symlink
+
 # Soong namespaces
 PRODUCT_SOONG_NAMESPACES += \
     $(LOCAL_PATH) \
@@ -405,9 +410,6 @@ PRODUCT_PACKAGES += \
     qti_telephony_utils.xml \
     qti_telephony_utils_prd.xml \
     telephony-ext
-
-PRODUCT_PACKAGES += \
-    qcrilNrDb_vendor
 
 PRODUCT_PACKAGES += \
     xiaomi-telephony-stub
@@ -459,10 +461,7 @@ PRODUCT_PACKAGES += \
 
 # Vibrator
 PRODUCT_PACKAGES += \
-    vendor.qti.hardware.vibrator.service
-
-PRODUCT_COPY_FILES += \
-    vendor/qcom/opensource/vibrator/excluded-input-devices.xml:$(TARGET_COPY_OUT_VENDOR)/etc/excluded-input-devices.xml
+    android.hardware.vibrator-service.peridot
 
 # Verified boot
 PRODUCT_COPY_FILES += \
@@ -495,8 +494,7 @@ PRODUCT_COPY_FILES += \
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.wifi.direct.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.direct.xml \
     frameworks/native/data/etc/android.hardware.wifi.passpoint.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.passpoint.xml \
-    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml \
-    frameworks/native/data/etc/android.hardware.wifi.aware.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.aware.xml
+    frameworks/native/data/etc/android.hardware.wifi.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.wifi.xml
 
 # Vendor
 $(call inherit-product, vendor/xiaomi/peridot/peridot-vendor.mk)
