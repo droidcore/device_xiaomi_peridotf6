@@ -276,6 +276,10 @@ PRODUCT_COPY_FILES += \
 # GameBar Performance Overlay
 $(call inherit-product, packages/apps/GameBar/gamebar.mk)    
 
+# KProfiles
+PRODUCT_PACKAGES += \
+    KProfiles
+
 # Keymint
 PRODUCT_PACKAGES += \
     android.hardware.authsecret-service.nxp
