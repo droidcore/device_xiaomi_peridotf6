@@ -26,6 +26,9 @@ echo "Cloning hardware xiaomi source..."
 rm -rf hardware/xiaomi
 git clone -b lineage-23.0 https://github.com/lightbulb-box/hardware_xiaomi.git hardware/xiaomi
 
+# Dolby
+git clone -b lineage-23.0 https://github.com/Poco-F6-resources/android_packages_apps_XiaomiDolby.git packages/apps/XiaomiDolby
+
 # Fix deprecated camera override flag
 BOARD_CONFIG=device/xiaomi/peridot-miuicamera/BoardConfig.mk
 
