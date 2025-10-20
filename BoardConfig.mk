@@ -174,8 +174,8 @@ TARGET_KERNEL_EXT_MODULES := \
 CAMERA_PACKAGE_NAME := com.android.camera
 
 # Partitions
-ifneq ($(BUILD_WITH_GAPPS),true)
-BOARD_PRODUCTIMAGE_EXTFS_INODE_COUNT ?= -1
+ifneq ($(WITH_GMS),true)
+-include vendor/lineage/config/BoardConfigReservedSize.mk
 ifeq ($(BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE),true)
 BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE ?= 1188036608
 else
