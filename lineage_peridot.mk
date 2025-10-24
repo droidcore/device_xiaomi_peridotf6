@@ -37,8 +37,8 @@ TARGET_FACE_UNLOCK_SUPPORTED := true
 EXTRA_UDFPS_ANIMATIONS := true
 
 PRODUCT_BUILD_PROP_OVERRIDES += \
-    BuildDesc="peridot_global-user 15 AQ3A.240912.001 OS2.0.205.0.VNPMIXM release-keys" \
-    BuildFingerprint=POCO/peridot_global/peridot:15/AQ3A.240912.001/OS2.0.205.0.VNPMIXM:user/release-keys \
+    BuildDesc="peridot_global-user 15 AQ3A.240912.001 OS2.0.206.0.VNPMIXM release-keys" \
+    BuildFingerprint=POCO/peridot_global/peridot:15/AQ3A.240912.001/OS2.0.206.0.VNPMIXM:user/release-keys \
     DeviceName=$(PRODUCT_SYSTEM_DEVICE) \
     DeviceProduct=$(PRODUCT_SYSTEM_NAME)
 
