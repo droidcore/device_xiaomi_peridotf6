@@ -362,7 +362,8 @@ PRODUCT_PACKAGES += \
 
 # QSPA
 PRODUCT_PACKAGES += \
-    vendor.qti.qspa-service
+    vendor.qti.qspa-service \
+    qspa_vendor.rc
 
 # Speed profile services and wifi-service to reduce RAM and storage.
 PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
