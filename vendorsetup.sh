@@ -29,6 +29,9 @@ git clone -b lineage-23.0 https://github.com/lightbulb-box/hardware_xiaomi.git h
 # Dolby
 git clone -b lineage-23.0 https://github.com/Poco-F6-resources/android_packages_apps_XiaomiDolby.git packages/apps/XiaomiDolby
 
+# ViperFX
+git clone https://github.com/TogoFire/packages_apps_ViPER4AndroidFX.git packages/apps/ViPER4AndroidFX
+
 # Fix deprecated camera override flag
 BOARD_CONFIG=device/xiaomi/peridot-miuicamera/BoardConfig.mk
 
