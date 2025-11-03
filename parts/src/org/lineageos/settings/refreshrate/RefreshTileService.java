@@ -38,6 +38,10 @@ public class RefreshTileService extends TileService {
     private int activeRateMin;
     private int activeRateMax;
 
+    // We'll add a special state for automatic (dynamic) refresh mode.
+    private static final int STATE_AUTO = -1;
+    private int currentState = STATE_AUTO; // Default to auto
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -48,51 +52,88 @@ public class RefreshTileService extends TileService {
             float rate = Float.valueOf(String.format(Locale.US, "%.02f", m.getRefreshRate()));
             if (m.getPhysicalWidth() == mode.getPhysicalWidth() &&
                 m.getPhysicalHeight() == mode.getPhysicalHeight()) {
-                availableRates.add(rate);
+                if (!availableRates.contains(rate)) {
+                    availableRates.add(rate);
+                }
             }
         }
+        availableRates.sort(Float::compare);
         syncFromSettings();
     }
 
     private int getSettingOf(String key) {
         float rate = Settings.System.getFloat(context.getContentResolver(), key, 60);
-        return availableRates.indexOf(
-                Float.valueOf(String.format(Locale.US, "%.02f", rate)));
+        return availableRates.indexOf(Float.valueOf(String.format(Locale.US, "%.02f", rate)));
     }
 
     private void syncFromSettings() {
+        float minRate = Settings.System.getFloat(context.getContentResolver(),
+                KEY_MIN_REFRESH_RATE, 60);
+        float peakRate = Settings.System.getFloat(context.getContentResolver(),
+                KEY_PEAK_REFRESH_RATE, 120);
+
+        if (minRate != peakRate) {
+            // If min != max, assume we’re in auto mode
+            currentState = STATE_AUTO;
+        } else {
+            currentState = availableRates.indexOf(
+                    Float.valueOf(String.format(Locale.US, "%.02f", minRate)));
+        }
+
         activeRateMin = getSettingOf(KEY_MIN_REFRESH_RATE);
         activeRateMax = getSettingOf(KEY_PEAK_REFRESH_RATE);
     }
 
+    private void setAutoRefreshRate() {
+        // Auto mode means the system can pick dynamically between lowest and highest
+        float minRate = availableRates.get(0);
+        float maxRate = availableRates.get(availableRates.size() - 1);
+        Settings.System.putFloat(context.getContentResolver(), KEY_MIN_REFRESH_RATE, minRate);
+        Settings.System.putFloat(context.getContentResolver(), KEY_PREFERRED_REFRESH_RATE, maxRate);
+        Settings.System.putFloat(context.getContentResolver(), KEY_PEAK_REFRESH_RATE, maxRate);
+    }
+
     private void cycleRefreshRate() {
-        if (activeRateMin < availableRates.size() - 1) {
-            activeRateMin++;
+        // Total states = availableRates.size() + 1 (for Auto)
+        if (currentState == STATE_AUTO) {
+            currentState = 0;
+        } else if (currentState < availableRates.size() - 1) {
+            currentState++;
         } else {
-            activeRateMin = 0;
+            currentState = STATE_AUTO;
         }
 
-        float rate = availableRates.get(activeRateMin);
-        Settings.System.putFloat(context.getContentResolver(), KEY_MIN_REFRESH_RATE, rate);
-        Settings.System.putFloat(context.getContentResolver(), KEY_PREFERRED_REFRESH_RATE, rate);
-        Settings.System.putFloat(context.getContentResolver(), KEY_PEAK_REFRESH_RATE, rate);
+        if (currentState == STATE_AUTO) {
+            setAutoRefreshRate();
+        } else {
+            float rate = availableRates.get(currentState);
+            Settings.System.putFloat(context.getContentResolver(), KEY_MIN_REFRESH_RATE, rate);
+            Settings.System.putFloat(context.getContentResolver(), KEY_PREFERRED_REFRESH_RATE, rate);
+            Settings.System.putFloat(context.getContentResolver(), KEY_PEAK_REFRESH_RATE, rate);
+        }
     }
 
     private String getFormatRate(float rate) {
-        return String.format("%.02f Hz", rate)
-                            .replaceAll("[\\.,]00", "");
+        return String.format("%.02f Hz", rate).replaceAll("[\\.,]00", "");
     }
 
     private void updateTileView() {
         String displayText;
-        float min = availableRates.get(activeRateMin);
-        float max = availableRates.get(activeRateMax);
 
-        displayText = String.format(Locale.US, min == max ? "%s" : "%s - %s",
-            getFormatRate(min), getFormatRate(max));
+        if (currentState == STATE_AUTO) {
+            float min = availableRates.get(0);
+            float max = availableRates.get(availableRates.size() - 1);
+            displayText = String.format(Locale.US, "Auto (%s–%s)",
+                    getFormatRate(min), getFormatRate(max));
+            tile.setState(Tile.STATE_INACTIVE);
+        } else {
+            float rate = availableRates.get(currentState);
+            displayText = getFormatRate(rate);
+            tile.setState(Tile.STATE_ACTIVE);
+        }
+
         tile.setContentDescription(displayText);
         tile.setSubtitle(displayText);
-        tile.setState(min == max ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE);
         tile.updateTile();
     }
 
