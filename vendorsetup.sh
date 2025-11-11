@@ -32,6 +32,9 @@ git clone -b lineage-23.0 https://github.com/lightbulb-box/android_packages_apps
 # ViperFX
 git clone https://github.com/TogoFire/packages_apps_ViPER4AndroidFX.git packages/apps/ViPER4AndroidFX
 
+#lineage-key
+git clone git@github.com:lightbulb-box/peridot-key.git vendor/lineage-priv/keys
+
 # Fix deprecated camera override flag
 BOARD_CONFIG=device/xiaomi/peridot-miuicamera/BoardConfig.mk
 
