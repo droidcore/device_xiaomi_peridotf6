@@ -1,6 +1,5 @@
 #!/bin/bash
 
-
 # Vendor (fresh clone)
 echo "Cloning vendor tree..."
 rm -rf vendor/xiaomi/peridot
@@ -45,8 +44,27 @@ if grep -q "TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED" "$BOARD_CONFIG"; then
     echo "[PATCH] Fixing deprecated TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED in $BOARD_CONFIG"
 
     sed -i '/TARGET_CAMERA_OVERRIDE_FORMAT_FROM_RESERVED/d' "$BOARD_CONFIG"
-
+    
     echo '$(call soong_config_set,camera,override_format_from_reserved,true)' >> "$BOARD_CONFIG"
+fi
+
+# Append GMS include to witaqua.mk (only if not already present)
+MK_FILE="vendor/lineage/config/witaqua.mk"
+if [ -f "$MK_FILE" ]; then
+    if ! grep -q "WITH_GMS" "$MK_FILE"; then
+        echo "[PATCH] Adding GMS config to $MK_FILE"
+        cat <<EOF >> "$MK_FILE"
+
+# GMS
+ifeq (\$(WITH_GMS),true)
+\$(call inherit-product-if-exists, vendor/gms/gms_full.mk)
+endif
+EOF
+    else
+        echo "[SKIP] GMS block already exists in $MK_FILE"
+    fi
+else
+    echo "[WARN] $MK_FILE not found, skipping GMS patch!"
 fi
 
 echo "vendorsetup.sh execution complete."
