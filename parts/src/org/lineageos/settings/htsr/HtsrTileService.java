@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.Icon;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
+import android.widget.Toast;
 
 import org.lineageos.settings.R;
 import org.lineageos.settings.utils.FileUtils;
@@ -17,20 +18,43 @@ public class HtsrTileService extends TileService {
     private static final int STATE_OFF = 0;
     private static final int STATE_ON = 1;
 
+    private SharedPreferences getPrefs() {
+        return getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
+    }
+
     private void saveState(int state) {
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt(KEY_LAST_STATE, state).apply();
+        getPrefs().edit().putInt(KEY_LAST_STATE, state).apply();
     }
 
     private int loadSavedState() {
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt(KEY_LAST_STATE, STATE_OFF);
+        return getPrefs().getInt(KEY_LAST_STATE, STATE_OFF);
+    }
+
+    private boolean writeStateToSysfs(int state) {
+        try {
+            FileUtils.writeLine(HTSR_PATH, state);
+            int readBack = FileUtils.readLineInt(HTSR_PATH);
+            return (readBack == state);
+        } catch (Exception e) {
+            return false;
+        }
     }
 
     private void applyState(int state) {
-        FileUtils.writeLine(HTSR_PATH, state);
-        saveState(state);
-        updateUI(state);
+        boolean ok = writeStateToSysfs(state);
+        if (ok) {
+            saveState(state);
+            updateUI(state);
+        } else {
+            Tile tile = getQsTile();
+            if (tile != null) {      
+                updateUI(loadSavedState());
+            }
+
+            try {
+                Toast.makeText(this, R.string.write_failed, Toast.LENGTH_SHORT).show();
+            } catch (Exception ignored) {}
+        }
     }
 
     private void updateUI(int state) {
@@ -38,24 +62,20 @@ public class HtsrTileService extends TileService {
         if (tile == null) return;
 
         tile.setLabel(getString(R.string.htsr_title));
-
         try {
             tile.setIcon(Icon.createWithResource(this, R.drawable.icon_htsr));
         } catch (Exception ignored) {}
 
-        String subtitle;
         if (state == STATE_ON) {
-            subtitle = getString(R.string.on);
             tile.setState(Tile.STATE_ACTIVE);
+            tile.setSubtitle(getString(R.string.on));
         } else if (state == STATE_OFF) {
-            subtitle = getString(R.string.off);
             tile.setState(Tile.STATE_INACTIVE);
+            tile.setSubtitle(getString(R.string.off));
         } else {
-            subtitle = getString(R.string.unknown);
             tile.setState(Tile.STATE_UNAVAILABLE);
+            tile.setSubtitle(getString(R.string.unknown));
         }
-
-        tile.setSubtitle(subtitle);
         tile.updateTile();
     }
 
@@ -65,7 +85,7 @@ public class HtsrTileService extends TileService {
         int current = FileUtils.readLineInt(HTSR_PATH);
         if (current < 0) {
             current = loadSavedState();
-            FileUtils.writeLine(HTSR_PATH, current);
+            writeStateToSysfs(current);
         }
         updateUI(current);
     }
@@ -73,12 +93,10 @@ public class HtsrTileService extends TileService {
     @Override
     public void onClick() {
         super.onClick();
-
         int current = FileUtils.readLineInt(HTSR_PATH);
         if (current < 0) {
             current = loadSavedState();
         }
-
         int newState = (current == STATE_ON) ? STATE_OFF : STATE_ON;
         applyState(newState);
     }
