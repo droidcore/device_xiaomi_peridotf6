@@ -162,6 +162,9 @@ PRODUCT_PACKAGES += \
 SYSTEM_OPTIMIZE_JAVA = true
 SYSTEMUI_OPTIMIZE_JAVA = true
 
+# FastCharge
+$(call inherit-product, packages/apps/FastCharge/fastcharge.mk)
+
 # Fastbootd
 PRODUCT_PACKAGES += \
     fastbootd
@@ -296,16 +299,6 @@ PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.software.device_id_attestation.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.software.device_id_attestation.xml \
     frameworks/native/data/etc/android.hardware.keystore.app_attest_key.xml:$(TARGET_COPY_OUT_VENDOR)/etc/permissions/android.hardware.keystore.app_attest_key.xml
 
-# Lineage Health
-PRODUCT_PACKAGES += \
-    vendor.lineage.health-service.default
-
-$(call soong_config_set,lineage_health,charging_control_supports_bypass,false)
-$(call soong_config_set,lineage_health,fast_charge_node,/sys/class/qcom-battery/fastcharge_enable)
-$(call soong_config_set,lineage_health,fast_charge_value_none,0)
-$(call soong_config_set,lineage_health,fast_charge_value_fast_charge,1)
-$(call soong_config_set,lineage_health,fast_charge_value_super_fast_charge,2)
-
 # Media
 PRODUCT_COPY_FILES += \
     $(AUDIO_HAL_DIR)/configs/common/codec2/media_codecs_c2_audio.xml:$(TARGET_COPY_OUT_VENDOR)/etc/media_codecs_c2_audio.xml
@@ -393,9 +386,6 @@ PRODUCT_PACKAGES += \
 PRODUCT_PACKAGES += \
     vendor.qti.qspa-service \
     qspa_vendor.rc
-
-# Speed profile services and wifi-service to reduce RAM and storage.
-PRODUCT_SYSTEM_SERVER_COMPILER_FILTER := speed-profile
 
 # SKU
 PRODUCT_COPY_FILES += \
