@@ -35,7 +35,7 @@ git clone https://github.com/TogoFire/packages_apps_ViPER4AndroidFX.git packages
 git clone git@github.com:lightbulb-box/peridot-key.git vendor/lineage-priv/keys
 
 # Gapps 
-git clone https://codeberg.org/Zabuka/vendor_gms vendor/gms
+git clone https://codeberg.org/CherishOS/android_vendor_gms vendor/gms
 
 # Fix deprecated camera override flag
 BOARD_CONFIG=device/xiaomi/peridot-miuicamera/BoardConfig.mk
