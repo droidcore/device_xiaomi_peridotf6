@@ -836,7 +836,7 @@ odm/lib64/com.xiaomi.immunesystem.so
 odm/lib64/com.xiaomi.mivi.hook.so
 odm/lib64/hw/camera.qcom.sm8650.so
 odm/lib64/hw/camera.qcom.so
-odm/lib64/hw/camera.xiaomi.so
+odm/lib64/hw/camera.xiaomi.so;DISABLE_CHECKELF
 odm/lib64/hw/com.qti.chi.offline.so
 odm/lib64/hw/com.qti.chi.override.so
 odm/lib64/libAF.so
