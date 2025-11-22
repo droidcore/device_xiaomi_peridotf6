@@ -130,6 +130,10 @@ PRODUCT_COPY_FILES += \
 # Contexthub
 PRODUCT_COPY_FILES += \
     frameworks/native/data/etc/android.hardware.context_hub.xml:$(TARGET_COPY_OUT_ODM)/etc/permissions/android.hardware.context_hub.xml
+    
+# DSP
+PRODUCT_PACKAGES += \
+    DSPVolumeSynchronizer
 
 # Display
 PRODUCT_PACKAGES += \
