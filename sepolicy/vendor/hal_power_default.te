@@ -1,3 +1,7 @@
+allow hal_power_default sysfs:file rw_file_perms;
+allow hal_power_default sysfs:file open;
+allow hal_power_default proc:file rw_file_perms;
+
 allow hal_power_default {
   vendor_sysfs_devfreq
   vendor_sysfs_msm_subsys
