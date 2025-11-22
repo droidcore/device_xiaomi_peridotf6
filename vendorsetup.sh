@@ -45,26 +45,20 @@ echo "Fetching QPR1 compat..."
 cd device/xiaomi/peridot
 git fetch https://github.com/GuidixX/device_xiaomi_peridot 16
 git cherry-pick 4f78def327d817d4c3a9e99ed439dcff64183365
-cd ../../../
+croot
 
 # Compat (cherry pick)
 echo "Fetching QPR1 compat..."
 cd hardware/lineage/compat
 git fetch https://github.com/stx-staging/android_hardware_statix_compat bp3a
 git reset --hard FETCH_HEAD
+croot 
 
 # Picking sepolicy for QPR1 (cherry pick)
 echo "Picking sepolicy fix..."
-cd ../../..
 cd device/qcom/sepolicy_vndr/sm8650
 git fetch https://github.com/sm8635-dev/device_qcom_sepolicy_vndr
 git cherry-pick 39cfd17977cc664fa8393b6569c39179f4127b2d 1d2c884133bb23d780fc35ecff27d2e6eeabe314 8e148a4417233704f40c223c0624d41f017b490e
-
-# Always back to root at the end
-if command -v croot &>/dev/null; then
-  croot
-else
-  cd "$ANDROID_BUILD_TOP" || true
-fi
+croot 
 
 echo "vendorsetup.sh execution complete."
