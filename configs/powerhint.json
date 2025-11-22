@@ -227,30 +227,6 @@
       "Duration": 5000,
       "Value": "10000"
     },
-	{
-      "PowerHint": "TOUCH_DOWN",
-      "Node": "CPULittleClusterMinFreq",
-      "Duration": 100, 
-      "Value": "1344000"
-    },
-    {
-      "PowerHint": "TOUCH_DOWN", 
-      "Node": "CPUBWMinFreq",
-      "Duration": 100,
-      "Value": "1555000"
-    },
-    {
-      "PowerHint": "TOUCH_UP",
-      "Node": "UclampTAMin",
-      "Duration": 0,
-      "Value": "0" 
-    },
-    {
-      "PowerHint": "TOUCH_UP",
-      "Node": "UclampFGMin", 
-      "Duration": 0,
-      "Value": "0"
-    },
     {
       "PowerHint": "EXPENSIVE_RENDERING",
       "Node": "PowerHALRenderingState",
