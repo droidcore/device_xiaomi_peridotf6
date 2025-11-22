@@ -1,3 +1,16 @@
+# Blur
+ro.sf.blurs_are_expensive=1
+
+# CameraX
+ro.camerax.extensions.enabled=true
+
+# Camera
+persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.android.camera
+ro.com.google.lens.oem_camera_package=com.android.camera
+ro.hardware.camera=xiaomi
+ro.miui.notch=1
+vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera
+
 # Device
 ro.product.mod_device=peridot_global
 
@@ -9,27 +22,22 @@ media.stagefright.thumbnail.prefer_hw_codecs=true
 ro.media.recorder-max-base-layer-fps=60
 ro.media.xml_variant.profiles=_cliffs_v0
 
-# Camera
-persist.vendor.camera.privapp.list=org.codeaurora.snapcam,com.android.camera
-ro.com.google.lens.oem_camera_package=com.android.camera
-ro.hardware.camera=xiaomi
-ro.miui.notch=1
-ro.product.mod_device=peridot_global
-vendor.camera.aux.packagelist=org.codeaurora.snapcam,com.android.camera
-
 # Disable vsync for cpu rendered apps
 debug.cpurend.vsync=false
+
+# LMKD
+ro.config.low_ram=false
+ro.lmk.swap_compression_ratio=2
+
+# Optimizer
+persist.sys.perf.scroll_opt=true
+persist.sys.perf.scroll_opt.heavy_app=1
 
 # Radio VoNR Calling
 persist.rcs.supported=1
 persist.radio.is_vonr_enabled_0=true
 persist.radio.is_vonr_enabled_1=true
 persist.vendor.vonr_setting_support=1
-
-# QTI Mem Optimisation
-persist.vendor.sys.memplus.enable=false
-ro.vendor.qti.sys.fw.bg_apps_limit=30
-ro.vendor.qti.sys.fw.bservice_limit=60
 
 # RIL Powersaving
 persist.radio.add_power_save=1 
@@ -38,3 +46,11 @@ ro.ril.disable.power.collapse=0
 ro.ril.fast.dormancy.rule=1 
 ro.ril.fast.dormancy.timeout=3
 ro.mot.eri.losalert.delay=1000
+
+# QTI Mem Optimisation
+persist.vendor.sys.memplus.enable=false
+ro.vendor.qti.sys.fw.bg_apps_limit=30
+ro.vendor.qti.sys.fw.bservice_limit=60
+
+# Zygote
+ro.zygote.disable_gl_preload=true
