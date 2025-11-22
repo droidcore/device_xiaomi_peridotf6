@@ -43,9 +43,10 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 # diag (cherry pick)
 echo "Fetching QPR1 compat..."
 cd device/xiaomi/peridot
-git fetch https://github.com/GuidixX/device_xiaomi_peridot
+git fetch https://github.com/GuidixX/device_xiaomi_peridot 16
 git cherry-pick 4f78def327d817d4c3a9e99ed439dcff64183365
 cd ../../../
+
 # Compat (cherry pick)
 echo "Fetching QPR1 compat..."
 cd hardware/lineage/compat
