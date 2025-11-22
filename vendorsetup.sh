@@ -3,7 +3,7 @@
 # Vendor (fresh clone)
 echo "Cloning vendor tree..."
 rm -rf vendor/xiaomi/peridot
-git clone https://github.com/sm8635-dev/vendor_xiaomi_peridot.git vendor/xiaomi/peridot
+git clone https://github.com/droidcore/vendor_xiaomi_peridots.git vendor/xiaomi/peridot
 
 # Kernel source (fresh clone)
 echo "Cloning kernel source tree..."
