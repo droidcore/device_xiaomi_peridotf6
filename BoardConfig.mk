@@ -28,10 +28,9 @@ AB_OTA_PARTITIONS := \
 
 # Architecture
 TARGET_ARCH := arm64
-TARGET_ARCH_VARIANT := armv8-2a-dotprod
+TARGET_ARCH_VARIANT := armv9-a
 TARGET_CPU_ABI := arm64-v8a
 TARGET_CPU_VARIANT := cortex-a76
-TARGET_CPU_VARIANT_RUNTIME := cortex-a76
 
 # Audio
 $(call soong_config_set, android_hardware_audio, run_64bit, true)
@@ -57,6 +56,14 @@ TARGET_PROVIDES_LIBAR_PAL := true
 WITH_DEXPREOPT := true
 DEX_PREOPT_DEFAULT := generate-vdex-and-image
 WITH_DEXPREOPT_DEBUG_INFO := false
+
+# ART
+ifeq ($(TARGET_BUILD_VARIANT),user)
+ART_BUILD_TARGET_NDEBUG := true
+ART_BUILD_TARGET_DEBUG := false
+ART_BUILD_HOST_NDEBUG := true
+ART_BUILD_HOST_DEBUG := false
+endif
 
 # Bootloader
 TARGET_BOOTLOADER_BOARD_NAME := peridot
@@ -90,7 +97,6 @@ ODM_MANIFEST_FILES := $(DEVICE_PATH)/configs/hidl/manifest_odm.xml
 
 # Inherit from proprietary files for miuicamera
 -include device/xiaomi/peridot-miuicamera/BoardConfig.mk
-CAMERA_PACKAGE_NAME := com.android.camera
 
 # Kernel
 BOARD_INCLUDE_DTB_IN_BOOTIMG := true
@@ -123,6 +129,7 @@ BOARD_KERNEL_CMDLINE := \
     swinfo.fingerprint=peridot:$(LINEAGE_VERSION) \
     mtdoops.fingerprint=peridot:$(LINEAGE_VERSION)
 
+BOARD_KERNEL_CMDLINE += rcupdate.rcu_expedited=1 rcu_nocbs=all rcutree.enable_rcu_lazy
 BOARD_BOOTCONFIG := \
     androidboot.hardware=qcom \
     androidboot.memcg=1 \
@@ -178,18 +185,7 @@ TARGET_KERNEL_EXT_MODULES := \
 CAMERA_PACKAGE_NAME := com.android.camera
 
 # Partitions
-ifneq ($(WITH_GMS),true)
 -include vendor/lineage/config/BoardConfigReservedSize.mk
-ifeq ($(BOARD_PRODUCTIMAGE_MINIMAL_PARTITION_RESERVED_SIZE),true)
-BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE ?= 1188036608
-else
-BOARD_PRODUCTIMAGE_PARTITION_RESERVED_SIZE ?= 1957691392
-endif
-BOARD_SYSTEMIMAGE_EXTFS_INODE_COUNT ?= -1
-BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE ?= 94371840
-BOARD_SYSTEM_EXTIMAGE_EXTFS_INODE_COUNT ?= -1
-BOARD_SYSTEM_EXTIMAGE_PARTITION_RESERVED_SIZE ?= 94371840
-endif
 
 BOARD_BOOTIMAGE_PARTITION_SIZE := 100663296
 BOARD_DTBOIMG_PARTITION_SIZE := 25165824
@@ -231,10 +227,6 @@ TARGET_PRODUCT_PROP += $(DEVICE_PATH)/props/product.prop
 TARGET_SYSTEM_PROP += $(DEVICE_PATH)/props/system.prop
 TARGET_VENDOR_PROP += $(DEVICE_PATH)/props/vendor.prop
 
-# MiuiCamera
-CAMERA_PACKAGE_NAME := com.android.camera
--include device/xiaomi/peridot-miuicamera/BoardConfig.mk
-
 # Recovery
 $(call soong_config_set, ufsbsg, ufsframework, bsg)
 BOARD_EXCLUDE_KERNEL_FROM_RECOVERY_IMAGE := true
@@ -248,9 +240,10 @@ ENABLE_VENDOR_RIL_SERVICE := true
 # Sepolicy
 include device/lineage/sepolicy/libperfmgr/sepolicy.mk
 include device/qcom/sepolicy_vndr/SEPolicy.mk
+include $(DEVICE_PATH)/sepolicy/SEPolicy-diag.mk
 BOARD_VENDOR_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/vendor
-SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 SYSTEM_EXT_PUBLIC_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/public
+SYSTEM_EXT_PRIVATE_SEPOLICY_DIRS += $(DEVICE_PATH)/sepolicy/private
 
 # SurfaceFlinger
 TARGET_USE_AOSP_SURFACEFLINGER := true
