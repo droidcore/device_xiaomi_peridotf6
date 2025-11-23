@@ -60,7 +60,7 @@ if [ -d vendor/lineage-priv/keys ]; then
   rm -rf vendor/lineage-priv/keys
 fi
 echo "Cloning fresh signing keys..."
-git clone https://github.com/droidcore/priv-key.git -b main vendor/lineage-priv/keys
+git clone https://github.com/AbuRider/priv_keys.git -b main vendor/lineage-priv/keys
 
 # Always back to root at the end
 if command -v croot &>/dev/null; then
