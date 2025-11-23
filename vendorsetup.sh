@@ -52,6 +52,6 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 # FastCharge (fresh clone)
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
-git clone -b lineage-23.1 https://github.com/sm8635-dev/packages_apps_FastCharge.git packages/apps/FastCharge
+git clone -b lineage-23.1 https://github.com/droidcore/packages_apps_FastCharge.git packages/apps/FastCharge
 
 echo "vendorsetup.sh execution complete."
