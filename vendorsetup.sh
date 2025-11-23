@@ -54,4 +54,19 @@ echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
 git clone -b lineage-23.1 https://github.com/droidcore/packages_apps_FastCharge.git packages/apps/FastCharge
 
+# Refresh signing keys
+if [ -d vendor/lineage-priv/keys ]; then
+  echo "Removing existing signing keys..."
+  rm -rf vendor/lineage-priv/keys
+fi
+echo "Cloning fresh signing keys..."
+git clone https://github.com/droidcore/priv-key.git -b main vendor/lineage-priv/keys
+
+# Always back to root at the end
+if command -v croot &>/dev/null; then
+  croot
+else
+  cd "$ANDROID_BUILD_TOP" || true
+fi
+
 echo "vendorsetup.sh execution complete."
