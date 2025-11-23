@@ -21,6 +21,7 @@ rm -rf hardware/xiaomi
 git clone -b lineage-23.0 https://github.com/lightbulb-box/hardware_xiaomi.git hardware/xiaomi
 
 # Dolby
+rm -rf packages/apps/XiaomiDolby
 git clone -b lineage-23.0 https://github.com/lightbulb-box/android_packages_apps_XiaomiDolby packages/apps/XiaomiDolby
 
 # MiuiCamera device tree (fresh clone)
@@ -52,19 +53,5 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
 git clone -b lineage-23.1 https://github.com/sm8635-dev/packages_apps_FastCharge.git packages/apps/FastCharge
-
-# Compat (cherry pick)
-echo "Fetching QPR1 compat..."
-cd hardware/lineage/compat
-git fetch https://github.com/stx-staging/android_hardware_statix_compat bp3a
-git reset --hard FETCH_HEAD
-croot
-
-# Picking sepolicy for QPR1 (cherry pick)
-echo "Picking sepolicy fix..."
-cd device/qcom/sepolicy_vndr/sm8650
-git fetch https://github.com/sm8635-dev/device_qcom_sepolicy_vndr
-git cherry-pick 39cfd17977cc664fa8393b6569c39179f4127b2d 1d2c884133bb23d780fc35ecff27d2e6eeabe314 8e148a4417233704f40c223c0624d41f017b490e
-croot
 
 echo "vendorsetup.sh execution complete."
