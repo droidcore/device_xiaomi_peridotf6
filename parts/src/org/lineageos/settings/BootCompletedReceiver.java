@@ -1,4 +1,4 @@
-package org.lineageos.settings;
+package org.lineageos.settings.thermal;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
