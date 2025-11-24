@@ -7,7 +7,7 @@ import android.content.SharedPreferences;
 
 import org.lineageos.settings.utils.FileUtils;
 
-public class BootCompletedReceiver extends BroadcastReceiver {
+public class BootCompleteReceiver extends BroadcastReceiver {
 
     private static final String THERMAL_PROFILE_PATH = "/sys/class/thermal/thermal_message/sconfig";
     private static final String PREF_NAME = "thermal_profile_prefs";
