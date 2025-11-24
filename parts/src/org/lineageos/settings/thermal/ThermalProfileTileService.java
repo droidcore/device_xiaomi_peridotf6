@@ -6,8 +6,6 @@
 
 package org.lineageos.settings.thermal;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.service.quicksettings.Tile;
 import android.service.quicksettings.TileService;
 
@@ -17,29 +15,11 @@ import org.lineageos.settings.utils.FileUtils;
 public class ThermalProfileTileService extends TileService {
 
     private static final String THERMAL_PROFILE_PATH = "/sys/class/thermal/thermal_message/sconfig";
-    private static final String PREF_NAME = "thermal_profile_prefs";
-    private static final String KEY_LAST_PROFILE = "last_profile";
-
+    
     private static final int THERMAL_PROFILE_DEFAULT = 0;
     private static final int THERMAL_PROFILE_MBATTERY = 1;
     private static final int THERMAL_PROFILE_MPERFORMANCE = 6;
     private static final int THERMAL_PROFILE_MGAME = 19;
-
-    private void saveProfile(int profile) {
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        prefs.edit().putInt(KEY_LAST_PROFILE, profile).apply();
-    }
-
-    private int loadSavedProfile() {
-        SharedPreferences prefs = getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE);
-        return prefs.getInt(KEY_LAST_PROFILE, THERMAL_PROFILE_DEFAULT);
-    }
-
-    private void applyProfile(int profile) {
-        FileUtils.writeLine(THERMAL_PROFILE_PATH, profile);
-        saveProfile(profile);
-        updateUI(profile);
-    }
 
     private void updateUI(int profile) {
         Tile tile = getQsTile();
@@ -71,21 +51,21 @@ public class ThermalProfileTileService extends TileService {
     @Override
     public void onStartListening() {
         super.onStartListening();
-        int currentProfile = FileUtils.readLineInt(THERMAL_PROFILE_PATH);
-        if (currentProfile < 0) {
-            currentProfile = loadSavedProfile();
-            FileUtils.writeLine(THERMAL_PROFILE_PATH, currentProfile);
-        }
-        updateUI(currentProfile);
+        int profile = FileUtils.readLineInt(THERMAL_PROFILE_PATH);
+        updateUI(profile);
+    }
+
+    @Override
+    public void onStopListening() {
+        super.onStopListening();
     }
 
     @Override
     public void onClick() {
         super.onClick();
         int currentProfile = FileUtils.readLineInt(THERMAL_PROFILE_PATH);
-        if (currentProfile < 0)
-            currentProfile = loadSavedProfile();
 
+        // Cycle through profiles: DEFAULT → BATTERY → PERFORMANCE → GAME → DEFAULT ...
         int newProfile;
         switch (currentProfile) {
             case THERMAL_PROFILE_DEFAULT:
@@ -97,11 +77,13 @@ public class ThermalProfileTileService extends TileService {
             case THERMAL_PROFILE_MPERFORMANCE:
                 newProfile = THERMAL_PROFILE_MGAME;
                 break;
+            case THERMAL_PROFILE_MGAME:
             default:
                 newProfile = THERMAL_PROFILE_DEFAULT;
                 break;
         }
 
-        applyProfile(newProfile);
+        FileUtils.writeLine(THERMAL_PROFILE_PATH, newProfile);
+        updateUI(newProfile);
     }
 }
