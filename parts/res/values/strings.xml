@@ -91,7 +91,4 @@
     <!-- HTSR -->
     <string name="htsr_title">High Touch Sampling Rate</string>
     <string name="unknown">Unknown</string>
-    <string name="htsr_description">Increases touch polling rate to minimise input latency</string>
-    <string name="htsr_setting_title">Increase touch responsivity</string>
-    <string name="write_failed">Sysfs node write failed</string>
 </resources>

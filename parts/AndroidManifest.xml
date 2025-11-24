@@ -22,22 +22,6 @@
         android:defaultToDeviceProtectedStorage="true"
         android:directBootAware="true">
 
-        <activity
-            android:name=".htsr.HtsrSettingActivity"
-            android:label="@string/htsr_title"
-            android:theme="@style/Theme.SubSettingsBase"
-            android:exported="false">
-            <intent-filter>
-                <action android:name="com.android.settings.action.IA_SETTINGS" />
-            </intent-filter>
-            <meta-data
-                android:name="com.android.settings.category"
-                android:value="com.android.settings.category.ia.display" />
-            <meta-data
-                android:name="com.android.settings.summary"
-                android:resource="@string/htsr_description" />
-        </activity>
-
         <receiver
             android:name=".BootCompletedReceiver"
             android:exported="true"
