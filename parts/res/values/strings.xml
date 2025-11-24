@@ -87,8 +87,4 @@
     <string name="auto_brightness_title">Auto Brightness</string>
     <string name="on">ON</string>
     <string name="off">OFF</string>
-
-    <!-- HTSR -->
-    <string name="htsr_title">High Touch Sampling Rate</string>
-    <string name="unknown">Unknown</string>
 </resources>
