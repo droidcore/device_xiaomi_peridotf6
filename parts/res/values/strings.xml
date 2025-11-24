@@ -83,8 +83,4 @@
     <string name="image_preview_next_page_content_description">Next</string>
     <string name="image_preview_previous_page_content_description">Previous</string>
 
-    <!-- Auto Brightness -->
-    <string name="auto_brightness_title">Auto Brightness</string>
-    <string name="on">ON</string>
-    <string name="off">OFF</string>
 </resources>
