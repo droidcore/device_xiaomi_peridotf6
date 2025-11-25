@@ -53,14 +53,6 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
 
-# Refresh signing keys
-if [ -d vendor/lineage-priv/keys ]; then
-  echo "Removing existing signing keys..."
-  rm -rf vendor/lineage-priv/keys
-fi
-echo "Cloning fresh signing keys..."
-git clone https://github.com/AbuRider/priv_keys.git -b main vendor/lineage-priv/keys
-
 # Always back to root at the end
 if command -v croot &>/dev/null; then
   croot
