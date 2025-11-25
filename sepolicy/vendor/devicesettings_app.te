@@ -4,8 +4,6 @@ allow devicesettings_app vendor_sysfs_kgsl:dir search;
 allow devicesettings_app vendor_sysfs_kgsl:{ file lnk_file } rw_file_perms;
 allow devicesettings_app sysfs_tp_virtual_htsr:file rw_file_perms;
 
-hal_client_domain(devicesettings_app, vendor_hal_displayfeature_xiaomi)
-
 allow devicesettings_app vendor_sysfs_battery_supply:dir search;
 allow devicesettings_app vendor_sysfs_battery_supply:file rw_file_perms;
 allow devicesettings_app proc_stat:file { read open getattr };
