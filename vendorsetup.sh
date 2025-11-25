@@ -3,7 +3,7 @@
 # Vendor (fresh clone)
 echo "Cloning vendor tree..."
 rm -rf vendor/xiaomi/peridot
-git clone -b lineage-23.0 git@gitlab.com:blu96-group/vendor_xiaomi_peridot.git vendor/xiaomi/peridot
+git clone -b lineage-23.1 https://gitea.com/zenin/vendor_xiaomi_peridot.git vendor/xiaomi/peridot
 
 # Kernel source (fresh clone)
 echo "Cloning kernel source tree..."
