@@ -52,7 +52,6 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 # FastCharge (fresh clone)
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
-git clone -b master https://github.com/droidcore/packages_apps_FastCharge.git packages/apps/FastCharge
 
 # Refresh signing keys
 if [ -d vendor/lineage-priv/keys ]; then
