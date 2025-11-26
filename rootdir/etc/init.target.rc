@@ -134,7 +134,7 @@ on boot
 
 # Touch
     chown system system /sys/devices/virtual/touch/touch_dev/bump_sample_rate
-    chmod 0664 /sys/devices/virtual/touch/touch_dev/bump_sample_rate
+    chmod 0660 /sys/devices/virtual/touch/touch_dev/bump_sample_rate
 
 #MIUI ADD:Thermal_NodeReq
     chmod 0664 /sys/class/thermal/thermal_message/sconfig
