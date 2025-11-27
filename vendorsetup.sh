@@ -53,11 +53,6 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
 
-# vendor lineage (fresh clone)
-echo "Cloning vendor lineage..."
-rm -rf vendor/lineage
-git clone -b bq1 https://github.com/droidcore/vendor_evolution.git vendor/lineage
-
 # Picking sepolicy for QPR1 (cherry pick)
 echo "Picking sepolicy fix..."
 cd device/qcom/sepolicy_vndr/sm8650
