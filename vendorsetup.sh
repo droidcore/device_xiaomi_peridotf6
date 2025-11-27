@@ -56,8 +56,8 @@ rm -rf packages/apps/FastCharge
 # Picking sepolicy for QPR1 (cherry pick)
 echo "Picking sepolicy fix..."
 cd device/qcom/sepolicy_vndr/sm8650
-git fetch https://github.com/droidcore/device_qcom_sepolicy_vndr
-git cherry-pick 8e148a4417233704f40c223c0624d41f017b490e
+git fetch https://github.com/droidcore/device_qcom_sepolicy_vndr qpr1
+git reset --hard FETCH_HEAD
 croot 
 
 # Refresh signing keys
