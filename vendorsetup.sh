@@ -58,6 +58,13 @@ echo "Cloning vendor lineage..."
 rm -rf vendor/lineage
 git clone -b bq1 https://github.com/droidcore/vendor_evolution.git vendor/lineage
 
+# Picking sepolicy for QPR1 (cherry pick)
+echo "Picking sepolicy fix..."
+cd device/qcom/sepolicy_vndr/sm8650
+git fetch https://github.com/droidcore/device_qcom_sepolicy_vndr
+git cherry-pick 39cfd17977cc664fa8393b6569c39179f4127b2d 1d2c884133bb23d780fc35ecff27d2e6eeabe314 8e148a4417233704f40c223c0624d41f017b490e
+croot 
+
 # Refresh signing keys
 if [ -d vendor/evolution-priv/keys ]; then
   echo "Removing existing signing keys..."
