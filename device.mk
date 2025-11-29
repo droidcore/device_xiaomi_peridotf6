@@ -497,11 +497,6 @@ PRODUCT_COPY_FILES += \
 # Userdata
 PRODUCT_FS_COMPRESSION := 1
 
-# VNDK
-PRODUCT_PACKAGES += \
-    android.hardware.graphics.common-V3-ndk.vendor \
-    libui-v33
-
 # Vendor service manager
 PRODUCT_PACKAGES += \
     vndservice \
