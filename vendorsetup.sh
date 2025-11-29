@@ -49,24 +49,15 @@ echo "Cloning Gamebar tree..."
 rm -rf packages/apps/GameBar
 git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/GameBar
 
-# FastCharge (fresh clone)
-echo "Cloning FastCharge..."
-rm -rf packages/apps/FastCharge
+# Packages Apps Settings
+echo "Cloning Custom Apps Settings tree..."
+rm -rf packages/apps/Settings
+git clone https://github.com/droidcore/packages_apps_Settings.git packages/apps/Settings
 
-# Picking sepolicy for QPR1 (cherry pick)
-echo "Picking sepolicy fix..."
-cd device/qcom/sepolicy_vndr/sm8650
-git fetch https://github.com/droidcore/device_qcom_sepolicy_vndr qpr1
-git reset --hard FETCH_HEAD
-croot 
-
-# Refresh signing keys
-if [ -d vendor/evolution-priv/keys ]; then
-  echo "Removing existing signing keys..."
-  rm -rf vendor/evolution-priv/keys
-fi
-echo "Cloning fresh signing keys..."
-git clone https://github.com/AbuRider/priv_keys.git -b evox vendor/evolution-priv/keys
+# system sepolicy 
+echo "Cloning Custom system sepolicy tree..."
+rm -rf system/sepolicy
+git clone https://github.com/droidcore/system_sepolicy.git system/sepolicy
 
 # Always back to root at the end
 if command -v croot &>/dev/null; then
