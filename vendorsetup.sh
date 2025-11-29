@@ -66,7 +66,7 @@ if [ -d vendor/evolution-priv/keys ]; then
   rm -rf vendor/evolution-priv/keys
 fi
 echo "Cloning fresh signing keys..."
-git clone https://github.com/droidcore/priv-key.git -b main vendor/evolution-priv/keys
+git clone git@github.com:droidcore/private_key.git -b main vendor/evolution-priv/keys
 
 # Always back to root at the end
 if command -v croot &>/dev/null; then
