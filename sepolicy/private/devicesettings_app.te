@@ -30,7 +30,8 @@ allow devicesettings_app {
   voiceinteraction_service
 }:service_manager find;
 
-
+# Allow XiaomiParts to read/write to sysfs_htsr;
+allow devicesettings_app sysfs_htsr:file rw_file_perms;
 
 # Allow devicesettings_app read and write /data/data subdirectory
 allow devicesettings_app system_app_data_file:dir create_dir_perms;
