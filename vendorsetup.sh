@@ -53,6 +53,13 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
 
+# Dtc (cherry pick...)
+echo "Feching dtc for peridot dtbo"
+cd external/dtc
+git fetch https://github.com/LineageOS/android_external_dtc lineage-23.0
+git reset --hard FETCH_HEAD
+croot
+
 # Picking sepolicy for QPR1 (cherry pick)
 echo "Picking sepolicy fix..."
 cd device/qcom/sepolicy_vndr/sm8650
