@@ -22,6 +22,13 @@ media.stagefright.thumbnail.prefer_hw_codecs=true
 ro.media.recorder-max-base-layer-fps=60
 ro.media.xml_variant.profiles=_cliffs_v0
 
+# Fling
+ro.min.fling_velocity=120
+ro.max.fling_velocity=16000
+ro.vendor.qti.cgroup_follow.enable=true
+persist.vendor.qti.inputopts.enable=true
+persist.vendor.qti.inputopts.movetouchslop=0.6
+
 # Disable vsync for cpu rendered apps
 debug.cpurend.vsync=false
 
