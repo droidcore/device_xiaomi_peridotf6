@@ -41,6 +41,7 @@ git clone https://github.com/TogoFire/packages_apps_ViPER4AndroidFX.git packages
 
 rm -rf system/sepolicy
 git clone -b bq1 https://github.com/droidcore/evo_system_sepolicy.git system/sepolicy
+
 # KProfiles (fresh clone)
 echo "Cloning KProfiles..."
 rm -rf packages/apps/KProfiles
