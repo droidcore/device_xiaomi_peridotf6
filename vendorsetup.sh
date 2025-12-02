@@ -42,8 +42,6 @@ git clone https://github.com/TogoFire/packages_apps_ViPER4AndroidFX.git packages
 rm -rf system/sepolicy
 git clone -b bq1 https://github.com/droidcore/evo_system_sepolicy.git system/sepolicy
 
-rm -rf hardware/lineage/compat
-git clone https://github.com/sm8635-dev/hardware_lineage_compat.git hardware/lineage/compat
 # KProfiles (fresh clone)
 echo "Cloning KProfiles..."
 rm -rf packages/apps/KProfiles
@@ -57,6 +55,12 @@ git clone https://github.com/droidcore/packages_apps_GameBar.git packages/apps/G
 # FastCharge (fresh clone)
 echo "Cloning FastCharge..."
 rm -rf packages/apps/FastCharge
+
+echo "Fetching QPR1 compat..."
+cd hardware/lineage/compat
+git fetch https://github.com/sm8635-dev/hardware_lineage_compat lineage-23.1
+git reset --hard FETCH_HEAD
+croot
 
 # Picking sepolicy for QPR1 (cherry pick)
 echo "Picking sepolicy fix..."
