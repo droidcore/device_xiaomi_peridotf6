@@ -17,6 +17,13 @@ ro.product.mod_device=peridot_global
 # QTI
 ro.vendor.qti.va_aosp.support=1
 
+# Fling
+ro.min.fling_velocity=120
+ro.max.fling_velocity=16000
+ro.vendor.qti.cgroup_follow.enable=true
+persist.vendor.qti.inputopts.enable=true
+persist.vendor.qti.inputopts.movetouchslop=0.6
+
 # Media
 media.stagefright.thumbnail.prefer_hw_codecs=true
 ro.media.recorder-max-base-layer-fps=60
