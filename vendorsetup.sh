@@ -59,6 +59,14 @@ echo "Cloning Custom system sepolicy tree..."
 rm -rf system/sepolicy
 git clone https://github.com/droidcore/system_sepolicy.git system/sepolicy
 
+# Refresh signing keys
+if [ -d vendor/lineage-priv/keys ]; then
+  echo "Removing existing signing keys..."
+  rm -rf vendor/lineage-priv/keys
+fi
+echo "Cloning fresh signing keys..."
+git clone https://github.com/AbuRider/priv_keys.git -b main vendor/lineage-priv/keys
+
 # Always back to root at the end
 if command -v croot &>/dev/null; then
   croot
